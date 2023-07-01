@@ -13,8 +13,10 @@ import InfoTooltip from './InfoTooltip/InfoTooltip'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import DeletePopup from './DeletePopup/DeletePopup'
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute'
-import { getUserData } from "../utils/auth";
+import { getUserData } from '../utils/auth'
 import SendContext from '../contexts/SendContext'
+import { authorization } from "../utils/auth"
+import { auth } from '../utils/auth'
 
 function App() {
   const navigate = useNavigate()
@@ -99,15 +101,17 @@ function App() {
   }, [])
 
   useEffect(() => {
-    setIsLoadingCards(true)
-    Promise.all([api.getInfo(), api.getCards()])
-      .then(([dataUser, dataCards]) => {
-        setCurrentUser(dataUser)
-        setCards(dataCards)
-        setIsLoadingCards(false)
-      })
-      .catch((err) => console.error(`Ошибка при загрузке начальных данных ${err}`))
-  }, [])
+    if (loggedIn) {
+      setIsLoadingCards(true)
+      Promise.all([api.getInfo(), api.getCards()])
+        .then(([dataUser, dataCards]) => {
+          setCurrentUser(dataUser)
+          setCards(dataCards)
+          setIsLoadingCards(false)
+        })
+        .catch((err) => console.error(`Ошибка при загрузке начальных данных ${err}`))
+    }
+  }, [loggedIn])
 
   const handleSubmit = useCallback((request, textError) => {
     setIsSend(true)
@@ -175,6 +179,35 @@ function App() {
     }
   }, [currentUser._id])
 
+  function handleLogin(password, email) {
+    setIsSend(true)
+    authorization(password, email)
+      .then(res => {
+        localStorage.setItem('jwt', res.token)
+        setLoggedIn(true)
+        navigate('/')
+      })
+      .catch(err => {
+        setIsError(true)
+        console.error(`Ошибкак при авторизации ${err}`)
+      })
+      .finally(() => setIsSend(false))
+  }
+
+  function handleRegister(password, email) {
+    setIsSend(true)
+    auth(password, email)
+      .then(res => {
+        setIsSuccessful(true)
+        navigate('/sign-in')
+      })
+      .catch((err) => {
+        setIsError(true)
+        console.error(`Ошибкак при регистрации ${err}`)
+      })
+      .finally(() => setIsSend(false))
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page__container">
@@ -196,13 +229,13 @@ function App() {
             <Route path='/sign-up' element={
               <>
                 <Header name='signup' />
-                <Main name='signup' setIsSend={setIsSend} setIsSuccessful={setIsSuccessful} setIsError={setIsError} />
+                <Main name='signup' handleRegister={handleRegister} />
               </>
             } />
             <Route path='/sign-in' element={
               <>
                 <Header name='signin' />
-                <Main name='signin' setLoggedIn={setLoggedIn} setIsSend={setIsSend} setIsSuccessful={setIsSuccessful} setIsError={setIsError} />
+                <Main name='signin' handleLogin={handleLogin} />
               </>
             } />
             <Route path='*' element={<Navigate to='/' />} />
@@ -241,12 +274,14 @@ function App() {
 
         <InfoTooltip
           name='successful'
+          titleText={'Вы успешно зарегистрировались!'}
           isOpen={isSuccessful}
           onClose={closeAllPopups}
         />
 
         <InfoTooltip
           name='error'
+          titleText={'Что-то пошло не так! Попробуйте ещё раз.'}
           isOpen={isError}
           onClose={closeAllPopups}
         />

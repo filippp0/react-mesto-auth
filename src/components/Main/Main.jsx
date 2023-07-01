@@ -7,7 +7,7 @@ import Register from '../Register/Register'
 import Login from '../Login/Login'
 
 
-const Main = memo(({ name, openCard, openProfile, openAvatar, openDelete, onCardClick, onCardLike, cards, isLoading, setIsSend, setLoggedIn, setIsSuccessful, setIsError }) => {
+const Main = memo(({ name, openCard, openProfile, openAvatar, openDelete, onCardClick, onCardLike, cards, isLoading, handleLogin, handleRegister }) => {
   const currentUser = useContext(CurrentUserContext)
   // console.log('render main')
   return (
@@ -41,9 +41,9 @@ const Main = memo(({ name, openCard, openProfile, openAvatar, openDelete, onCard
         </>
         :
         name === 'signup' ?
-          <Register setIsSend={setIsSend} setIsSuccessful={setIsSuccessful} setIsError={setIsError}/>
+          <Register handleRegister={handleRegister}/>
           :
-          <Login setIsSend={setIsSend} setLoggedIn={setLoggedIn} setIsSuccessful={setIsSuccessful} setIsError={setIsError}/>
+          <Login handleLogin={handleLogin}/>
       }
     </main>
   )

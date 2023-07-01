@@ -1,5 +1,9 @@
 const baseUrl = 'https://auth.nomoreparties.co'
 
+function getResponseData(res) {
+  return res.ok ? res.json() : Promise.reject(`${res.status} ${res.statusText}`)
+}
+
 export function auth(password, email) {
   return fetch(`${baseUrl}/signup`, {
     method: 'POST',
@@ -11,8 +15,7 @@ export function auth(password, email) {
       email: email,
     })
   })
-  .then(res => {
-    return res.ok ? res.json() : Promise.reject(`${res.status} ${res.statusText}`)})
+  .then(res => getResponseData(res))
 }
 
 export function authorization(password, email) {
@@ -26,8 +29,7 @@ export function authorization(password, email) {
       email: email,
     })
   })
-  .then(res => {
-    return res.ok ? res.json() : Promise.reject(`${res.status} ${res.statusText}`)})
+  .then(res => getResponseData(res))
 }
 
 export function getUserData(token) {
@@ -37,6 +39,5 @@ export function getUserData(token) {
       'Content-Type': 'application/json',
       "Authorization" : `Bearer ${token}`
     }})
-  .then(res => {
-    return res.ok ? res.json() : Promise.reject(`${res.status} ${res.statusText}`)})
-}
+    .then(res => getResponseData(res))
+  }

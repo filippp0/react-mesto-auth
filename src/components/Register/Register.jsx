@@ -1,26 +1,14 @@
-import { useNavigate } from "react-router-dom";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import useFormValidation from "../../utils/useFormValidation";
 import Input from "../Input/Input";
-import { auth } from "../../utils/auth";
 
-export default function Register({ setIsSend, setIsSuccessful, setIsError }) {
+
+export default function Register({ handleRegister }) {
   const { values, errors, isValid, isInputValid, handleChange } = useFormValidation()
-  const navigate = useNavigate()
 
   function onRegister(evt) {
     evt.preventDefault()
-    setIsSend(true)
-    auth(values.password, values.email)
-      .then(res => {
-        setIsSuccessful(true)
-        navigate('/sign-in')
-      })
-      .catch((err) => {
-        setIsError(true)
-        console.error(`Ошибкак при регистрации ${err}`)
-      })
-      .finally(() => setIsSend(false))
+    handleRegister(values.password, values.email)
   }
 
   return (

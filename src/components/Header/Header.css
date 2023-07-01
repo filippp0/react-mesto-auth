@@ -1,0 +1,133 @@
+.page__header {
+  width: calc(880/1280*100%);
+  margin: 0 auto;
+  border-bottom: 1px solid rgba(84, 84, 84, .7);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-top: 45px;
+  transition: padding-top .2s linear;
+}
+
+@media screen and (max-width: 767px) {
+  .page__header {
+    width: 100%;
+    padding-top: 28px;
+  }
+}
+
+.page__header_opened {
+  padding-top: 169px;
+}
+
+.header__logo {
+  display: block;
+  object-fit: cover;
+  width: 142px;
+  height: 33px;
+  margin-bottom: 40px;
+  color: var(--main-color);
+}
+
+@media screen and (max-width: 767px) {
+  .header__logo {
+    width: calc(103.74/320*100%);
+    height: calc(24.4/320*100%);
+    margin-left: calc(27/320*100%);
+    margin-bottom: 30.6px;
+  }
+}
+
+.header__link {
+  margin-top: 6px;
+  text-decoration: none;
+  color: var(--main-color);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.21;
+}
+
+@media screen and (max-width: 767px) {
+  .header__link {
+    margin-right: calc(30/320*100%);
+    margin-top: calc(6/320*100%);
+  }
+}
+
+.header__email-container {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 6px;
+  transition: visibility .2s linear, height .2s linear;
+}
+
+@media screen and (max-width:767px) {
+  .header__email-container {
+    visibility: hidden;
+    height: 0;
+    padding-top: 0;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid rgba(84, 84, 84, .7);
+  }
+}
+
+
+.header__email-container_opened {
+  visibility: visible;
+  height: 142px;
+}
+
+.header__email {
+  margin: 0 24px 0 0;
+  color: var(--main-color);
+}
+
+
+
+@media screen and (max-width:767px) {
+  .header__email {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+}
+
+.header__unlogin {
+  text-decoration: none;
+  color: #A9A9A9;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.21;
+}
+
+.header__button {
+  width: 24px;
+  height: 20px;
+  margin: calc(7/320*100%) calc(30/320*100%) 0 0;
+  display: none;
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  background-image: url(../../image/burger.svg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media screen and (max-width:767px) {
+  .header__button{
+    display: block;
+  }
+}
+
+.header__button_active {
+  background-image: url(../../image/exit.svg);
+  background-size: 20px 20px;
+}

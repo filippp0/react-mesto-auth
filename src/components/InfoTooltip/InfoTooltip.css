@@ -1,0 +1,26 @@
+.popup__registration-image {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 32px;
+  background-image: url(../../image/successful.svg);
+  background-position: center;
+  background-size: cover;
+}
+
+.popup__registration-image_type_error {
+  background-image: url(../../image/error.svg);
+}
+
+.popup__registration-title {
+  text-align: center;
+  margin: 0;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.21;
+}
+
+@media screen and (max-width: 550px) {
+  .popup__registration-title {
+    font-size: 20px;
+  }
+}

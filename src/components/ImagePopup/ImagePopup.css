@@ -1,0 +1,32 @@
+.popup__figure-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+.popup__image {
+  display: block;
+  max-width: 75vw;
+  max-height: 75vh;
+  color: var(--main-color);
+}
+
+@media screen and (max-height: 420px) {
+  .popup__image{
+  max-height: 65vh;
+  }
+}
+
+.popup__image-caption {
+  max-width: 75vw;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  align-self: flex-start;
+  padding-top: 10px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.52px;
+  color: var(--main-color);
+}

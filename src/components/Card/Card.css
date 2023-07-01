@@ -1,0 +1,65 @@
+.elements__element {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.elements__trash {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-image: url(../../image/trash-icon.svg);
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  width: 18px;
+  height: 19px;
+  transition: opacity .5s linear;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .elements__trash:hover {
+    opacity: .6;
+    cursor: pointer;
+  }
+}
+
+.elements__image {
+  width: 100%;
+  aspect-ratio: 1/1;
+  display: block;
+  object-fit: cover;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  color: var(--main-color);
+  cursor: pointer;
+}
+
+.elements__rectangle {
+  padding-left: 21px;
+  padding-right: 20px;
+  background-color: var(--main-color);
+  min-height: 79px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 22px;
+  row-gap: 3px;
+  align-content: center;
+}
+
+.elements__subtitle {
+  align-self: center;
+  margin: 0;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.05px;
+  color: var(--dark-color);
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
+

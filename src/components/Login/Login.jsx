@@ -1,9 +1,9 @@
-import RegistrationForm from '../RegistrationForm/RegistrationForm'
+import SectionForm from '../SectionForm/SectionForm'
 import useFormValidation from '../../utils/useFormValidation'
 import Input from "../Input/Input";
 
 
-export default function Login({ handleLogin }) {
+export default function Login({ name, handleLogin }) {
   const { values, errors, isValid, isInputValid, handleChange } = useFormValidation()
 
   function onLogin(evt) {
@@ -12,7 +12,7 @@ export default function Login({ handleLogin }) {
   }
 
   return (
-    <RegistrationForm name='signin' onSubmit={onLogin} isValid={isValid}>
+    <SectionForm name={name} onSubmit={onLogin} isValid={isValid}>
       <Input
         name='email'
         type='email'
@@ -32,6 +32,6 @@ export default function Login({ handleLogin }) {
         isInputValid={isInputValid.password}
         error={errors.password}
       />
-    </RegistrationForm>
+    </SectionForm>
   )
 }

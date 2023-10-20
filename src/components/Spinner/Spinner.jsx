@@ -1,7 +1,7 @@
 import './Spinner.css'
 
-export default function Spinner() {
+export default function Spinner({ check }) {
   return (
-    <div className="spinner"></div>
+    <div className={`spinner ${check && 'spinner_type_check'}`}></div>
   )
 }

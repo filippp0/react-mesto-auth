@@ -17,6 +17,7 @@ import { getUserData } from '../utils/auth'
 import SendContext from '../contexts/SendContext'
 import { authorization } from "../utils/auth"
 import { auth } from '../utils/auth'
+import ProtectedHomeElement from './ProtectedHomeElement/ProtectedHomeElement'
 
 function App() {
   const navigate = useNavigate()
@@ -39,6 +40,7 @@ function App() {
   const [isSuccessful, setIsSuccessful] = useState(false)
   const [isError, setIsError] = useState(false)
   const [loggedIn, setLoggedIn] = useState(false)
+  const [isCheckToken, setIsCheckToken] = useState(true)
   //переменная состояния попапов
   const isOpen = isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || isDeletePopupOpen || isImagePopupOpen || isSuccessful || isError
 
@@ -72,9 +74,13 @@ function App() {
         .then(res => {
           setDataUser(res.data.email)
           setLoggedIn(true)
+          setIsCheckToken(false)
           navigate('/')
         })
-        .catch(err => console.log(`Ошибкак авторизации повторном входе ${err}`))
+        .catch(err => console.log(`Ошибкак авторизации при повторном входе ${err}`))
+    } else {
+      setIsCheckToken(false)
+      setLoggedIn(false)
     }
   }, [navigate])
 
@@ -185,6 +191,7 @@ function App() {
       .then(res => {
         localStorage.setItem('jwt', res.token)
         setLoggedIn(true)
+        window.scrollTo(0, 0)
         navigate('/')
       })
       .catch(err => {
@@ -199,6 +206,7 @@ function App() {
     auth(password, email)
       .then(res => {
         setIsSuccessful(true)
+        window.scrollTo(0, 0)
         navigate('/sign-in')
       })
       .catch((err) => {
@@ -215,6 +223,7 @@ function App() {
         <SendContext.Provider value={isSend}>
           <Routes>
             <Route path='/' element={<ProtectedRoute
+              element={ProtectedHomeElement}
               dataUser={dataUser}
               openCard={handleAddPlaceClick}
               openProfile={handleEditProfileClick}
@@ -224,21 +233,22 @@ function App() {
               onCardLike={handleLike}
               cards={cards}
               isLoading={isLoadingCards}
-              loggedIn={loggedIn} />
+              loggedIn={loggedIn}
+              isCheckToken={isCheckToken} />
             } />
             <Route path='/sign-up' element={
               <>
                 <Header name='signup' />
-                <Main name='signup' handleRegister={handleRegister} />
+                <Main name='signup' isCheckToken = {isCheckToken} handleRegister={handleRegister} />
               </>
             } />
             <Route path='/sign-in' element={
               <>
                 <Header name='signin' />
-                <Main name='signin' handleLogin={handleLogin} />
+                <Main name='signin' isCheckToken = {isCheckToken} handleLogin={handleLogin} />
               </>
             } />
-            <Route path='*' element={<Navigate to='/' />} />
+            <Route path='*' element={<Navigate to='/' replace/>} />
           </Routes>
         </SendContext.Provider>
 

@@ -61,6 +61,7 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 1.21;
+  background-color: var(--main-color);
   cursor: pointer;
   transition: background-color .3s linear;
 }

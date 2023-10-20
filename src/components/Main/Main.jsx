@@ -1,49 +1,32 @@
 import './Main.css'
-import { memo, useContext } from "react"
-import Card from "../Card/Card.jsx"
+import { memo } from "react"
 import Spinner from "../Spinner/Spinner.jsx"
-import CurrentUserContext from "../../contexts/CurrentUserContext.js"
 import Register from '../Register/Register'
 import Login from '../Login/Login'
+import HomePage from '../HomePage/HomePage'
 
 
-const Main = memo(({ name, openCard, openProfile, openAvatar, openDelete, onCardClick, onCardLike, cards, isLoading, handleLogin, handleRegister }) => {
-  const currentUser = useContext(CurrentUserContext)
-  // console.log('render main')
+const Main = memo(({ name, openCard, openProfile, openAvatar, openDelete, onCardClick, onCardLike, cards, isLoading, isCheckToken, handleLogin, handleRegister }) => {
   return (
     <main className='main'>
-      {name === 'main' ?
-        <>
-          <section className="profile page__profile">
-            <div className="profile__container">
-              <div>
-                <button type="button" className="profile__avatar-overlay" onClick={openAvatar}>
-                  <img src={currentUser.avatar ? currentUser.avatar : '#'} alt="аватар профиля" className="profile__avatar" />
-                </button>
-              </div>
-              <div className="profile__info">
-                <h1 className="profile__name" >{currentUser.name ? currentUser.name : ''}</h1>
-                <button type="button" className="profile__edit" onClick={openProfile} />
-                <p className="profile__job">{currentUser.about ? currentUser.about : ''}</p>
-              </div>
-            </div>
-            <button type="button" className="profile__add-button" onClick={openCard} />
-          </section>
-          <section aria-label="Коллекция картинок" className="elements page__elements">
-            <ul className="elements__lists">
-              {isLoading ? <Spinner /> : cards.map(data => {
-                return (
-                  <Card key={data._id} card={data} openDelete={openDelete} onCardClick={onCardClick} onCardLike={onCardLike} />
-                )
-              })}
-            </ul>
-          </section>
-        </>
+      {isCheckToken ?
+        <Spinner check={isCheckToken}/>
         :
-        name === 'signup' ?
-          <Register handleRegister={handleRegister}/>
-          :
-          <Login handleLogin={handleLogin}/>
+        { main:
+          <HomePage
+            openCard={openCard}
+            openProfile={openProfile}
+            openAvatar={openAvatar}
+            openDelete={openDelete}
+            onCardClick={onCardClick}
+            onCardLike={onCardLike}
+            cards={cards}
+            isLoading={isLoading}
+          />
+          ,
+          signup:  <Register name={name} handleRegister={handleRegister} />,
+          signin: <Login name={name} handleLogin={handleLogin} />
+          }[name]
       }
     </main>
   )

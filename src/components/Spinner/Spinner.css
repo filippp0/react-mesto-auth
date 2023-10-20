@@ -8,3 +8,9 @@
   align-self: start;
   justify-self: center;
 }
+
+.spinner_type_check {
+  margin: 0 auto;
+  width: 180px;
+  height: 180px;
+}

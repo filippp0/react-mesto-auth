@@ -1,9 +1,9 @@
 import Form from '../Form/Form';
-import './RegistrationForm.css'
+import './SectionForm.css'
 import { Link } from 'react-router-dom';
 
 
-export default function RegistrationForm({ name, children, isValid, onSubmit }) {
+export default function SectionForm({ name, children, isValid, onSubmit }) {
 
   return (
     <section className="login page__login">

@@ -5,7 +5,6 @@ import ButtonLike from "../ButtonLike/ButtonLike.jsx";
 
 const Card = memo(({ card, openDelete, onCardClick, onCardLike }) => {
   const currentUser = useContext(CurrentUserContext)
-
   return (
     <li className="elements__list">
       <article className="elements__element">

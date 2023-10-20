@@ -8,17 +8,24 @@ export default function Form({ name, titleButton, children, isValid, onSubmit })
   return (
     <form noValidate name={name} onSubmit={onSubmit}>
       {children}
-      <button
-        type="submit"
-        className={
-          `${name === 'signin' || name === 'signup' ? 'login__button' : 'popup__submit'}
-          ${isSend ? (name === 'signin' || name === 'signup' ? 'login__button_loading' : 'popup__submit_loading') : ''}
-          ${isValid ? '' : (name === 'signin' || name === 'signup' ? 'login__button_disable' : 'popup__submit_disable')}`
-        }
-        disabled={isSend}
-      >
-        {isSend ? '' : titleButton || 'Сохранить'}
-      </button>
+
+      {/* {{login:
+        <button className={`login__button ${isSend ? 'login__button_loading' : ''} ${isValid ? '' : 'login__button_disable'}`}>
+          {isSend ? '' : titleButton || 'Сохранить'}
+        </button>,
+        popup:
+        <button className={`popup__submit ${isSend ? 'popup__submit_loading' : ''} ${isValid ? '' : 'popup__submit_disable'}`}>
+          {isSend ? '' : titleButton || 'Сохранить'}
+        </button>}[`${name === 'signin' || name === 'signup' ? 'login' : 'popup'}`]} */}
+
+      {name === 'signin' || name === 'signup' ?
+        <button className={`login__button ${isSend ? 'login__button_loading' : ''} ${isValid ? '' : 'login__button_disable'}`}>
+          {isSend ? '' : titleButton || 'Сохранить'}
+        </button>
+        :
+        <button className={`popup__submit ${isSend ? 'popup__submit_loading' : ''} ${isValid ? '' : 'popup__submit_disable'}`}>
+          {isSend ? '' : titleButton || 'Сохранить'}
+        </button>}
     </form>
   )
 }
